@@ -14,10 +14,11 @@ enum class TokenType {
 
 struct Token {
     TokenType type;
-    optional<string> value;
+    optional<string> value {};
 };
 
 vector<Token> tokenize(const string& str) {
+    vector<Token> tokens {};
     string buf {}; 
     
     for (int i = 0; i < str.length(); i++) {
@@ -25,17 +26,51 @@ vector<Token> tokenize(const string& str) {
         if (isalpha(c)) {
             buf.push_back(c);
             i++;
-            while (isalnum(str.at(i))) {
+            while (i < str.length() && isalnum(str.at(i))) {
                 buf.push_back(str.at(i));
                 i++;
             }
             i--;
 
-            if (buf.)
+            if (buf == "return") {
+                tokens.push_back({.type=TokenType::_return});
+                buf.clear();
+                continue;
+            }             
+            else if (isdigit(c)) {
+                buf.push_back(c);
+                i++;
+                while (isdigit(str.at(i))) {
+                    buf.push_back(str.at(i));
+                    i++;
+                } 
+                i--;
+                tokens.push_back({.type=TokenType::int_literal, .value=buf});
+                buf.clear();
+                continue;
+            }
+            else if (c == ';') {
+                tokens.push_back({.type=TokenType::semicolon});
+            }
+            else if(isspace(c)) {
+                continue;
+            }
+            else {
+                std::cerr << "Unknown token: " << buf << std::endl;
+                exit(EXIT_FAILURE);
+            }
+
         }
     }
 
+    /*
+    for (const Token& token : tokens) {
+        cout << "Token(type=" << static_cast<int>(token.type)
+             << ", value=" << token.value.value_or("") << ")" << endl;
+    }
+    */
 
+    return tokens;
 }
 
 int main(int argc, char* argv[]) {
@@ -52,7 +87,11 @@ int main(int argc, char* argv[]) {
     input.close();
 
     string contents = contents_stream.str();
-    tokenize(contents);   
+    
+    vector<Token> tokenized_contents = tokenize(contents);   
+
+    cout << "Tokenized successfully" << endl;
+
 
     return 0;
 }

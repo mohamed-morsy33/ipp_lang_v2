@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug ipp",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/ipp.exe",
+      "args": ["${workspaceFolder}/src/init.ippl"],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "C:/Strawberry/c/bin/gdb.exe",
+      "environment": [{ "name": "PATH", "value": "C:/msys64/ucrt64/bin;${env:PATH}" }],
+      "preLaunchTask": "build-debug"
+    }
+  ]
+}

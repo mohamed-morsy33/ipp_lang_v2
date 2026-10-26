@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="51 54 148 148" width="256" height="256">
+  <!-- Flat version of the I++ mark from iplusplus-icon.svg -->
+  <g fill="none" stroke="#F97316" stroke-width="18">
+    <path d="M72.4 77.2 A62 62 0 0 1 143.6 77.2"/>
+    <path d="M72.4 178.8 A62 62 0 0 0 143.6 178.8"/>
+    <path d="M108 66 V190"/>
+  </g>
+  <g fill="#F97316">
+    <path d="M128 124 H137 V115 H145 V124 H154 V132 H145 V141 H137 V132 H128 Z"/>
+    <path d="M158 124 H167 V115 H175 V124 H184 V132 H175 V141 H167 V132 H158 Z"/>
+  </g>
+</svg>

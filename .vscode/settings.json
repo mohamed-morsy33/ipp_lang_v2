@@ -1,0 +1,7 @@
+{
+  "C_Cpp.debugShortcut": false,
+  "cmake.debugConfig": {
+    "args": ["${workspaceFolder}/src/init.ippl"],
+    "cwd": "${workspaceFolder}"
+  }
+}

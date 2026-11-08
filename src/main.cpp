@@ -7,7 +7,7 @@
 using namespace std;
 
 enum class TokenType {
-    _return,
+    _exit,
     int_literal,
     semicolon, 
 };
@@ -24,7 +24,7 @@ string tokens_to_asm(const vector<Token>& tokens) {
     for (int i = 0; i < tokens.size(); i++) {
         const Token& token = tokens.at(i);
 
-        if (token.type == TokenType::_return) {
+        if (token.type == TokenType::_exit) {
             if (i + 1 < tokens.size() && tokens.at(i + 1).type == TokenType::int_literal) { 
                 if (i + 2 < tokens.size() && tokens.at(i + 2).type == TokenType::semicolon) {
                     output << "    mov rax, 60\n";
@@ -54,8 +54,8 @@ vector<Token> tokenize(const string& str) {
             }
             i--;
 
-            if (buf == "return") {
-                tokens.push_back({.type=TokenType::_return});
+            if (buf == "exit") {
+                tokens.push_back({.type=TokenType::_exit});
                 buf.clear();
                 continue;
             }

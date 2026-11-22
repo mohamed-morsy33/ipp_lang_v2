@@ -9,16 +9,7 @@
 
 using namespace std;
 
-enum class TokenType {
-    _exit,
-    int_literal,
-    semicolon, 
-};
 
-struct Token {
-    TokenType type;
-    optional<string> value {};
-};
 
 string tokens_to_asm(const vector<Token>& tokens) {
     stringstream output;
@@ -42,64 +33,7 @@ string tokens_to_asm(const vector<Token>& tokens) {
     return output.str();
 }
 
-vector<Token> tokenize(const string& str) {
-    vector<Token> tokens {};
-    string buf {}; 
-    
-    for (int i = 0; i < str.length(); i++) {
-        char c = str.at(i);
-        if (isalpha(c)) {
-            buf.push_back(c);
-            i++;
-            while (i < str.length() && isalnum(str.at(i))) {
-                buf.push_back(str.at(i));
-                i++;
-            }
-            i--;
 
-            if (buf == "exit") {
-                tokens.push_back({.type=TokenType::_exit});
-                buf.clear();
-                continue;
-            }
-            else {
-                std::cerr << "Unknown token: " << buf << std::endl;
-                exit(EXIT_FAILURE);
-            }
-        }
-        else if (isdigit(c)) {
-            buf.push_back(c);
-            i++;
-            while (i < str.length() && isdigit(str.at(i))) {
-                buf.push_back(str.at(i));
-                i++;
-            }
-            i--;
-            tokens.push_back({.type=TokenType::int_literal, .value=buf});
-            buf.clear();
-            continue;
-        }
-        else if (c == ';') {
-            tokens.push_back({.type=TokenType::semicolon});
-        }
-        else if (isspace(c)) {
-            continue;
-        }
-        else {
-            std::cerr << "Unknown token: " << c << std::endl;
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    /*
-    for (const Token& token : tokens) {
-        cout << "Token(type=" << static_cast<int>(token.type)
-             << ", value=" << token.value.value_or("") << ")" << endl;
-    }
-    */
-
-    return tokens;
-}
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
@@ -113,7 +47,9 @@ int main(int argc, char* argv[]) {
     contents_stream << input.rdbuf();
 
     input.close();
-    vector<Token> tokenized_contents = tokenize(contents_stream.str());   
+
+    Tokenizer tokenizer(contents_stream.str());
+    vector<Token> tokenized_contents = tokenizer.tokenize();   
     // cout << tokens_to_asm(tokenized_contents) << endl;
     
     
